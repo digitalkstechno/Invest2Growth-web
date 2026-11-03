@@ -73,32 +73,32 @@ export default function ContactUsPage() {
 
             {/* Centered Hero Content Block */}
             <div className="max-w-3xl mx-auto text-center space-y-4 flex flex-col items-center">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#b8612b]/30 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-2 rounded-full bg-white/90 backdrop-blur-md border border-[#b8612b]/30 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#b8612b]" />
                 DIRECT EXECUTIVE ADVISORY
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-tight leading-tight text-center drop-shadow-xs">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-tight leading-tight text-center drop-shadow-xs mb-2">
                 Connect with Gujarat&apos;s Premier <br className="hidden sm:inline" />
                 <span className="text-[#b8612b] font-bold">Real Estate &amp; Land Counsel</span>
               </h1>
 
               <p className="text-sm sm:text-base text-zinc-700 font-medium leading-relaxed max-w-2xl mx-auto text-center drop-shadow-xs">
-                Whether you are acquiring strategic TP/DP land corridors, prime commercial towers, heavy GIDC industrial plots, or verified luxury residential estates — our accredited senior consultants and legal advocates provide seamless execution.
+                From strategic land corridors and commercial towers to industrial plots and luxury estates — our accredited advisors provide seamless execution.
               </p>
             </div>
           </div>
         </section>
 
         {/* ================= MAIN SPLIT SECTION (CONTACT DETAILS + FORM) ================= */}
-        <section className="relative w-full py-16 sm:py-20 lg:py-18 bg-[#fafafa] border-b border-gray-100">
+        <section className="relative w-full py-8 bg-[#fafafa] border-b border-gray-100">
           <div className="mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
               {/* ================= LEFT COLUMN: CONTACT CHANNELS & HUBS (5 COLS) ================= */}
               <div className="lg:col-span-5 space-y-8">
                 {/* 1. Quick Direct Channels Card */}
                 <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-md shadow-zinc-900/[0.03] space-y-6">
-                  <div className="border-b border-gray-100 pb-4">
+                  <div className="border-b border-gray-100 pb-4 mb-3">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#b8612b]">
                       Priority Communication
                     </span>
@@ -222,7 +222,7 @@ export default function ContactUsPage() {
 
                     {/* Category Selection Pills */}
                     <div className="space-y-2.5">
-                      <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider font-[family-name:var(--font-jakarta)]">
+                      <label className="block text-xs font-semibold text-gray-700 font-[family-name:var(--font-jakarta)]">
                         Asset Class / Interest Type <span className="text-[#b8612b]">*</span>
                       </label>
                       <div className="flex flex-wrap gap-2">
@@ -235,7 +235,7 @@ export default function ContactUsPage() {
                               onClick={() =>
                                 setFormData((prev) => ({ ...prev, category: cat }))
                               }
-                              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${isSelected
+                              className={`px-3.5 py-2 rounded-xl text-[13px] font-semibold transition-all cursor-pointer ${isSelected
                                 ? "bg-[#002E11] text-white shadow-sm border border-[#002E11]"
                                 : "bg-gray-50 border border-gray-200 text-gray-700 hover:border-[#b8612b]/50 hover:bg-zinc-100/60"
                                 }`}
@@ -319,7 +319,7 @@ export default function ContactUsPage() {
                     </div>
 
                     {/* Submit Button */}
-                    <div className="pt-2">
+                    <div>
                       <button
                         type="submit"
                         disabled={isSubmitting}
@@ -332,7 +332,7 @@ export default function ContactUsPage() {
                           </>
                         ) : (
                           <>
-                            <span>Request Advisory Call</span>
+                            <span className="text-sm font-medium leading-relaxed max-w-2xl mx-auto text-center drop-shadow-xs">Request Advisory Call</span>
                             <Send className="w-4 h-4 text-[#e59a67]" />
                           </>
                         )}

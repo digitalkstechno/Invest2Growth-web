@@ -39,7 +39,7 @@ export default function AboutUsSection() {
   return (
     <section
       id="about"
-      className="relative w-full bg-white  py-16 sm:py-20 lg:py-18 px-4 sm:px-8 lg:px-12 xl:px-16 border-t border-b border-gray-100 scroll-mt-24 overflow-hidden"
+      className="relative w-full bg-white py-8 px-4 sm:px-8 lg:px-12 xl:px-16 border-t border-b border-gray-100 scroll-mt-24 overflow-hidden"
     >
       <span id="about-us" className="absolute -top-24 pointer-events-none" />
       <span id="aboutus" className="absolute -top-24 pointer-events-none" />
@@ -51,10 +51,10 @@ export default function AboutUsSection() {
 
       <div className="relative z-10 mx-auto">
         {/* ================= TOP HEADER (2-COL) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start justify-between pb-12 sm:pb-16 border-b border-gray-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start justify-between pb-8 sm:pb-4 border-b border-gray-100">
           {/* Left Title */}
           <div className="lg:col-span-7 space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-2 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-[#b8612b]" />
               ABOUT INVEST2GROWTH
             </div>
@@ -75,7 +75,7 @@ export default function AboutUsSection() {
         </div>
 
         {/* ================= MAIN CONTENT GRID ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-12 ">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-6">
           {/* ================= LEFT BENTO: 4 STATS CARDS (5 COLS) ================= */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-4 h-full">
             {/* Card 1: 18k+ Happy Customers (Stone Light) */}

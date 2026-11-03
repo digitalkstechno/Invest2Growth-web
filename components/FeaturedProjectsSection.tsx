@@ -109,7 +109,7 @@ export default function FeaturedProjectsSection() {
   return (
     <section
       id="featured-projects"
-      className="relative w-full py-16 sm:py-20 lg:py-18 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 border-t border-gray-100 overflow-hidden scroll-mt-20"
+      className="relative w-full py-8 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 border-t border-gray-100 overflow-hidden scroll-mt-20"
     >
       {/* Target anchor for both #features and #featured-projects */}
       <span id="features" className="absolute -top-24 pointer-events-none" />
@@ -120,13 +120,13 @@ export default function FeaturedProjectsSection() {
 
       <div className="relative z-10 mx-auto">
         {/* ================= SECTION HEADER (CENTERED & MATCHING TYPOGRAPHY) ================= */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-2 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#b8612b]" />
             SIGNATURE PORTFOLIO
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-2 font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
             Featured Projects
           </h2>
 

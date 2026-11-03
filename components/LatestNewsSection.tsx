@@ -78,22 +78,22 @@ export default function LatestNewsSection() {
   return (
     <section
       id="news"
-      className="relative w-full px-4 sm:px-8 lg:px-12 xl:px-16 py-16 sm:py-20 lg:py-18 bg-[#fafafa] text-zinc-900 border-t border-gray-100 scroll-mt-20"
+      className="relative w-full px-4 sm:px-8 lg:px-12 xl:px-16 py-8 bg-[#fafafa] text-zinc-900 border-t border-gray-100 scroll-mt-20"
     >
       <div className=" mx-auto">
         {/* ================= SECTION TITLE ================= */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-2 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#b8612b]" />
             MARKET INTELLIGENCE
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-2 font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
             Latest News &amp; Market Insights
           </h2>
 
-          <p className="text-sm sm:text-base text-zinc-600 font-light leading-relaxed max-w-2xl mx-auto">
-            Stay informed with verified policy updates, regulatory clearances, infrastructure developments, and investment trends across Gujarat.
+          <p className="text-sm sm:text-base text-zinc-600 font-light leading-relaxed max-w-2xl mx-auto font-[family-name:var(--font-jakarta)]">
+            Stay informed with verified policy updates, infrastructure developments, and real estate market trends across Gujarat.
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export default function LatestNewsSection() {
                   <h3 className="text-base sm:text-lg font-bold text-zinc-900 leading-snug line-clamp-2 group-hover:text-[#002E11] transition-colors">
                     {mainArticle.title}
                   </h3>
-                  <p className="text-sm sm:text-sm text-zinc-600 font-light leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-sm sm:text-[12px] text-zinc-600 font-light leading-relaxed max-w-2xl mx-auto">
                     {mainArticle.excerpt}
                   </p>
                 </div>

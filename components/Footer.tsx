@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="absolute top-0 right-1/4 w-[500px] h-[300px] rounded-full bg-[#002E11]/40 blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[250px] rounded-full bg-[#b8612b]/15 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 mx-auto pt-16 sm:pt-20 pb-12 px-4 sm:px-8 lg:px-12 xl:px-16">
+      <div className="relative z-10 mx-auto pt-16 sm:pt-15 pb-10 px-4 lg:px-12 xl:px-16">
         {/* ================= TOP / MAIN FOOTER GRID ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Left Column: Brand, Tagline, Big Headline, App Badges (5 Cols) */}
@@ -244,7 +244,7 @@ export default function Footer() {
         </div>
 
         {/* ================= BOTTOM WATERMARK & LEGAL SUB-BAR ================= */}
-        <div className="relative pt-10 overflow-hidden">
+        <div className="relative pt-8 overflow-hidden">
           
 
           {/* Micro Legal Bar */}

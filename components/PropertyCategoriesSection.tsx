@@ -66,7 +66,7 @@ export default function PropertyCategoriesSection() {
   return (
     <section
       id="property-categories"
-      className="relative w-full py-20 lg:py-18 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 overflow-hidden border-t border-zinc-200/80"
+      className="relative w-full py-8 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 overflow-hidden border-t border-zinc-200/80"
     >
       {/* Light Architectural Blueprint Grid Background */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
@@ -79,13 +79,13 @@ export default function PropertyCategoriesSection() {
 
       <div className="relative z-10">
         {/* ================= SECTION HEADER ================= */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14 sm:mb-15">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-2 rounded-full bg-[#b8612b]/10 border border-[#b8612b]/25 text-[#b8612b] text-xs font-bold tracking-widest uppercase shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#b8612b]" />
             EXPLORE ASSET CLASSES
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-2 font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
             Explore Property Categories
           </h2>
 
