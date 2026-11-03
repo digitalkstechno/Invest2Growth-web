@@ -66,7 +66,7 @@ export default function PropertyCategoriesSection() {
   return (
     <section
       id="property-categories"
-      className="relative w-full py-20 lg:py-28 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 overflow-hidden border-t border-zinc-200/80"
+      className="relative w-full py-20 lg:py-18 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 overflow-hidden border-t border-zinc-200/80"
     >
       {/* Light Architectural Blueprint Grid Background */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
@@ -86,7 +86,7 @@ export default function PropertyCategoriesSection() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
-            Distinguished Investment Domains
+            Explore Property Categories
           </h2>
 
           <p className="text-sm sm:text-base text-zinc-600 font-light leading-relaxed max-w-2xl mx-auto">

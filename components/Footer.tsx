@@ -40,12 +40,12 @@ export default function Footer() {
             </Link>
 
             {/* Big Headline from user reference */}
-            <h2 className="text-3xl sm:text-4xl lg:text-3xl font-sans font-light text-white tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-3xl font-[family-name:var(--font-jakarta)] font-light text-white tracking-tight leading-tight mb-3">
               Find Your Perfect Property
             </h2>
 
             {/* Sub-description */}
-            <p className="text-xs sm:text-sm text-zinc-400 font-light leading-relaxed max-w-md">
+            <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed pr-10">
               Take control of your real estate journey with Gujarat&apos;s verified land and investment portal. Discover, buy, sell, and verify with complete legal trust.
             </p>
 
@@ -251,7 +251,7 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] text-zinc-500 font-light border-t border-zinc-900">
 
             {/* Copyright Tagline */}
-            <p className="text-sm text-zinc-400 font-sans">
+            <p className="text-sm text-zinc-400 font-[family-name:var(--font-jakarta)]">
               2026 &copy; Invest2Growth,  All Rights Reserved.
             </p>
 

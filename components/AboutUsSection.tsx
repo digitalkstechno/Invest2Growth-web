@@ -28,54 +28,6 @@ const tabsData: TabContent[] = [
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
     imageAlt: "invest2growth modern minimalist living interior",
   },
-  {
-    id: "resources",
-    label: "Resources",
-    title: "Resources",
-    description:
-      "Gain direct access to verified market dossiers, 7/12 land records checklists, RERA legal compliance guides, and quarterly Gujarat growth corridor analysis prepared by our accredited analysts.",
-    buttonText: "Explore Resources",
-    buttonHref: "#news",
-    image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "invest2growth architectural resources and master plans",
-  },
-  {
-    id: "sell",
-    label: "Sell your Property",
-    title: "Sell your Property",
-    description:
-      "List your luxury villa, commercial office, or strategic land parcel with verified pedigree. Connect with over 18,000 active investors and verified buyers with complete transparent advisory.",
-    buttonText: "List Your Property",
-    buttonHref: "#service",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "invest2growth luxury private residence",
-  },
-  {
-    id: "management",
-    label: "Property Management",
-    title: "Property Management",
-    description:
-      "End-to-end stewardship for your real estate assets: tenant verification, periodic structural audits, revenue compliance, and automated rental yields tracking for domestic and NRI investors.",
-    buttonText: "Manage Assets",
-    buttonHref: "#service",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "invest2growth commercial corporate management",
-  },
-  {
-    id: "3d-tours",
-    label: "3D Tours",
-    title: "3D Tours",
-    description:
-      "Experience properties remotely before scheduling an on-site visit. Explore ultra-high-definition spatial walkthroughs, 360-degree interactive floor maps, and aerial drone land surveys.",
-    buttonText: "View 3D Tours",
-    buttonHref: "#featured-projects",
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "invest2growth immersive 3D spatial tour preview",
-  },
 ];
 
 export default function AboutUsSection() {
@@ -87,7 +39,7 @@ export default function AboutUsSection() {
   return (
     <section
       id="about"
-      className="relative w-full bg-white  py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 xl:px-16 border-t border-b border-gray-100 scroll-mt-24 overflow-hidden"
+      className="relative w-full bg-white  py-16 sm:py-20 lg:py-18 px-4 sm:px-8 lg:px-12 xl:px-16 border-t border-b border-gray-100 scroll-mt-24 overflow-hidden"
     >
       <span id="about-us" className="absolute -top-24 pointer-events-none" />
       <span id="aboutus" className="absolute -top-24 pointer-events-none" />
@@ -108,7 +60,7 @@ export default function AboutUsSection() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-[family-name:var(--font-jakarta)] font-semibold text-[#002E11] tracking-[-0.03em] leading-tight">
-              Building Communities, <br /> One Home at a Time
+              Your Trusted Property, <br /> Partner 
             </h2>
           </div>
 
@@ -131,7 +83,7 @@ export default function AboutUsSection() {
               <span className="text-4xl sm:text-5xl lg:text-[54px] font-black text-[#002E11] tracking-tight leading-none">
                 18k+
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-zinc-600 mt-6 sm:mt-10">
+              <span className="text-xs sm:text-sm font-semibold text-zinc-600 mt-6 sm:mt-10 font-[family-name:var(--font-jakarta)]">
                 Happy Customers
               </span>
             </div>
@@ -144,7 +96,7 @@ export default function AboutUsSection() {
               <span className="relative z-10 text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-none">
                 25+
               </span>
-              <span className="relative z-10 text-xs sm:text-sm font-semibold text-[#e59a67] mt-6 sm:mt-10">
+              <span className="relative z-10 text-xs sm:text-sm font-semibold text-[#e59a67] mt-6 sm:mt-10 font-[family-name:var(--font-jakarta)]">
                 Years of Experience
               </span>
             </div>
@@ -154,7 +106,7 @@ export default function AboutUsSection() {
               <span className="text-4xl sm:text-5xl lg:text-[54px] font-black text-[#002E11] tracking-tight leading-none">
                 250+
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-zinc-600 mt-6 sm:mt-10">
+              <span className="text-xs sm:text-sm font-semibold text-zinc-600 mt-6 sm:mt-10 font-[family-name:var(--font-jakarta)]">
                 Verified Projects
               </span>
             </div>
@@ -164,43 +116,23 @@ export default function AboutUsSection() {
               <span className="text-4xl sm:text-5xl lg:text-[54px] font-black text-[#002E11] tracking-tight leading-none">
                 32+
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-zinc-600 mt-6 sm:mt-10">
+              <span className="text-xs sm:text-sm font-semibold text-zinc-600 mt-6 sm:mt-10 font-[family-name:var(--font-jakarta)]">
                 Strategic Hubs
               </span>
             </div>
           </div>
 
           {/* ================= RIGHT BENTO: PILLS + MAIN ABOUT CARD (7 COLS) ================= */}
-          <div className="lg:col-span-7 flex flex-col justify-between space-y-4 h-full">
-            {/* Filter / Pill Tabs */}
-            <div className="flex flex-wrap items-center gap-2">
-              {tabsData.map((tab) => {
-                const isActive = tab.id === activeTabId;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTabId(tab.id)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 cursor-pointer ${
-                      isActive
-                        ? "bg-[#002E11] text-white shadow-sm border border-[#002E11]"
-                        : "bg-white border border-stone-300 text-zinc-700 hover:border-[#b8612b] hover:text-[#b8612b]"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
-
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-3 h-full">
             {/* Main Interactive Card */}
             <div className="flex-1 bg-stone-50/90 border border-stone-200/80 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row gap-6 sm:gap-8 items-center justify-between shadow-xs">
               {/* Left Text Column */}
-              <div className="flex-1 flex flex-col justify-between h-full space-y-4">
+              <div className="flex-1 flex flex-col justify-between h-full space-y-3">
                 <div className="space-y-3">
-                  <h3 className="text-2xl sm:text-3xl font-sans font-normal text-[#002E11] tracking-tight">
+                  <h3 className="text-2xl sm:text-3xl font-[family-name:var(--font-jakarta)] font-normal text-[#002E11] tracking-tight">
                     {currentTab.title}
                   </h3>
-                  <p className="text-sm sm:text-[15px] text-zinc-600 leading-relaxed font-light">
+                  <p className="text-sm sm:text-base text-zinc-600 font-light leading-relaxed max-w-2xl mx-auto">
                     {currentTab.description}
                   </p>
                 </div>
@@ -208,7 +140,7 @@ export default function AboutUsSection() {
                 <div className="pt-2">
                   <Link
                     href={currentTab.buttonHref}
-                    className="inline-flex items-center gap-2 bg-[#002E11] text-white text-xs sm:text-sm font-semibold px-6 py-2.5 rounded-full transition-all group shadow-sm shadow-[#b8612b]/20 hover:scale-[1.02]"
+                    className="inline-flex items-center gap-2 bg-[#002E11] font-[family-name:var(--font-jakarta)] text-white text-xs sm:text-sm font-semibold px-6 py-2.5 rounded-full transition-all group shadow-sm shadow-[#b8612b]/20 hover:scale-[1.02]"
                   >
                     <span>{currentTab.buttonText}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

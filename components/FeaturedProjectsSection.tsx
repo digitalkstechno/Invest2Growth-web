@@ -1,12 +1,7 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  MapPin,
-  Building,
-} from "lucide-react";
+import React from "react";
+import { MapPin } from "lucide-react";
 
 interface ProjectItem {
   id: string;
@@ -80,9 +75,9 @@ const featuredProjects: ProjectItem[] = [
     badge: "GIDC Approved",
     href: "#logix-park",
   },
-  {
+    {
     id: "azure-resort",
-    name: "Azure Waters Resort Residences",
+    name: "Azure Waters Resort",
     category: "Other",
     price: "₹1.95 Cr+",
     location: "Dwarka - Somnath Coastal Road",
@@ -94,7 +89,7 @@ const featuredProjects: ProjectItem[] = [
     badge: "Guaranteed Rental",
     href: "#azure-resort",
   },
-  {
+    {
     id: "emerald-heights",
     name: "Emerald Heights Residences",
     category: "Residential",
@@ -111,34 +106,10 @@ const featuredProjects: ProjectItem[] = [
 ];
 
 export default function FeaturedProjectsSection() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [favoriteIds, setFavoriteIds] = useState<Record<string, boolean>>({});
-
-  const toggleFavorite = (id: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setFavoriteIds((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  // Manual scroll with Left / Right arrow buttons
-  const scroll = (direction: "left" | "right") => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const firstCard = container.querySelector<HTMLElement>(":scope > div");
-    const cardWidth = firstCard ? firstCard.offsetWidth : 330;
-    const gap = 24;
-    const scrollAmount = cardWidth + gap;
-
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <section
       id="featured-projects"
-      className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 border-t border-gray-100 overflow-hidden scroll-mt-20"
+      className="relative w-full py-16 sm:py-20 lg:py-18 px-4 sm:px-8 lg:px-12 xl:px-16 bg-white text-zinc-900 border-t border-gray-100 overflow-hidden scroll-mt-20"
     >
       {/* Target anchor for both #features and #featured-projects */}
       <span id="features" className="absolute -top-24 pointer-events-none" />
@@ -164,85 +135,55 @@ export default function FeaturedProjectsSection() {
           </p>
         </div>
 
-        {/* ================= HORIZONTALLY SCROLLABLE CARDS WITH NAVIGATION ================= */}
-        <div className="relative">
-          {/* Floating Left Arrow */}
-          <button
-            type="button"
-            onClick={() => scroll("left")}
-            className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-[#002E11] text-[#002E11] hover:text-white border border-gray-200/90 shadow-xl shadow-zinc-900/10 active:scale-95 transition-all duration-200 cursor-pointer"
-            aria-label="Scroll left to previous projects"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
+        {/* ================= STATIC 4-CARD GRID (1 ROW OF 4 CARDS) ================= */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 sm:gap-6">
+          {featuredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="flex flex-col justify-between rounded-3xl bg-white border border-gray-200/90 hover:border-[#b8612b]/50 shadow-md shadow-zinc-900/[0.03] hover:shadow-xl hover:shadow-[#b8612b]/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+            >
+              {/* Top: Project Image with Fixed Height & Exact Object Cover */}
+              <div className="p-3 pb-0 shrink-0">
+                <div className="relative w-full h-[200px] rounded-2xl overflow-hidden bg-gray-100">
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
+              </div>
 
-          {/* Floating Right Arrow */}
-          <button
-            type="button"
-            onClick={() => scroll("right")}
-            className="absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-[#002E11] text-[#002E11] hover:text-white border border-gray-200/90 shadow-xl shadow-zinc-900/10 active:scale-95 transition-all duration-200 cursor-pointer"
-            aria-label="Scroll right to next projects"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
+              {/* Middle & Content: Uniform Heights for All Elements */}
+              <div className="p-4 sm:p-5">
+                <div className="space-y-2">
+                  {/* Project Name (Fixed 1-line height) */}
+                  <h3 className="text-sm sm:text-base font-bold text-zinc-900 tracking-tight line-clamp-1 h-6 flex items-center hover:text-[#002E11] transition-colors">
+                    {project.name}
+                  </h3>
 
-          {/* Cards Track: Uniform fixed height cards with identical image aspect and text bounds */}
-          <div
-            ref={scrollContainerRef}
-            className="flex items-stretch gap-6 overflow-x-auto scroll-smooth pb-6 pt-2 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {featuredProjects.map((project) => {
-              const isFav = favoriteIds[project.id];
-              return (
-                <div
-                  key={project.id}
-                  className="w-[290px] sm:w-[320px] md:w-[330px] h-[400px] flex-shrink-0 snap-start flex flex-col justify-between rounded-3xl bg-white border border-gray-200/90 hover:border-[#b8612b]/50 shadow-md shadow-zinc-900/[0.03] hover:shadow-xl hover:shadow-[#b8612b]/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
-                >
-                  {/* Top: Project Image with Fixed Height & Exact Object Cover */}
-                  <div className="p-3 pb-0 shrink-0">
-                    <div className="relative w-full h-[220px] rounded-2xl overflow-hidden bg-gray-100">
-                      <img
-                        src={project.image}
-                        alt={project.name}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
-                    </div>
+                  {/* Location & Rating (Fixed height) */}
+                  <div className="flex items-center justify-between text-xs text-zinc-500 gap-2 h-5">
+                    <span className="flex items-center gap-1 truncate text-zinc-600">
+                      <MapPin className="w-3.5 h-3.5 text-[#b8612b] shrink-0" />
+                      <span className="truncate text-[13px]">{project.location}</span>
+                    </span>
                   </div>
 
-                  {/* Middle & Content: Uniform Heights for All Elements */}
-                  <div className="p-4">
-                    <div className="space-y-2">
-                      {/* Project Name (Fixed 1-line height) */}
-                      <h3 className="text-sm sm:text-base font-bold text-zinc-900 tracking-tight line-clamp-1 h-6 flex items-center hover:text-[#002E11] transition-colors">
-                        {project.name}
-                      </h3>
+                  {/* Specification Tag (Fixed height) */}
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#002E11] bg-[#002E11]/5 px-2.5 py-1 rounded-lg h-7">
+                    <span className="truncate text-[12.5px]">{project.specs}</span>
+                  </div>
 
-                      {/* Location & Rating (Fixed height) */}
-                      <div className="flex items-center justify-between text-xs text-zinc-500 gap-2 h-5">
-                        <span className="flex items-center gap-1 truncate text-zinc-600">
-                          <MapPin className="w-3.5 h-3.5 text-[#b8612b] shrink-0" />
-                          <span className="truncate text-[13px]">{project.location}</span>
-                        </span>
-                      </div>
-
-                      {/* Specification Tag (Fixed height) */}
-                      <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#002E11] bg-[#002E11]/5 px-2.5 py-1 rounded-lg h-7">
-                        <span className="truncate text-[12.5px]">{project.specs}</span>
-                      </div>
-
-                      {/* Short Description (Strict 2-line height container) */}
-                      <div className="h-9 sm:h-10 overflow-hidden">
-                        <p className="text-[12px] text-zinc-500 line-clamp-2 leading-relaxed font-light">
-                          {project.description}
-                        </p>
-                      </div>
-
-                    </div>
+                  {/* Short Description (Strict 2-line height container) */}
+                  <div className="h-9 sm:h-10 overflow-hidden">
+                    <p className="text-[12px] text-zinc-500 line-clamp-2 leading-relaxed font-light">
+                      {project.description}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
