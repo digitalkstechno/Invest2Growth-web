@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
 import {
   Phone,
   Mail,
@@ -52,9 +51,6 @@ export default function ContactUsPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col bg-white text-zinc-900 overflow-x-clip scroll-smooth">
-      {/* Sticky Top Navbar */}
-      <Navbar />
-
       <main className="flex-1 w-full relative">
         {/* ================= HERO HEADER DOSSIER WITH contactUs.png BACKGROUND ================= */}
         <section className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden bg-zinc-50 border-b border-gray-200/80">

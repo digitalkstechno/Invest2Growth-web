@@ -2,274 +2,335 @@
 
 import React from "react";
 import Link from "next/link";
-import { TrendingUp, } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  Link2,
+  Home as HomeIcon,
+  PhoneCall,
+  Mail,
+  Phone,
+  MapPin,
+  ChevronRight,
+  ArrowUp,
+} from "lucide-react";
 
 export default function Footer() {
-  return (
-    <footer className="relative w-full bg-black text-white overflow-hidden border-t border-zinc-900">
-      {/* Subtle Dark Ambient Brand Glows */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[300px] rounded-full bg-[#002E11]/40 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[400px] h-[250px] rounded-full bg-[#b8612b]/15 blur-3xl pointer-events-none" />
+  const pathname = usePathname();
 
-      <div className="relative z-10 mx-auto pt-16 sm:pt-15 pb-10 px-4 lg:px-12 xl:px-16">
-        {/* ================= TOP / MAIN FOOTER GRID ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
-          {/* Left Column: Brand, Tagline, Big Headline, App Badges (5 Cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            {/* Logo: invest2growth Emblem */}
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2.5 transition-transform hover:scale-[1.01]"
-              aria-label="invest2growth homepage"
-            >
-              <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-[#002E11] text-white shadow-md shadow-[#002E11]/40 border border-emerald-500/20">
-                <TrendingUp className="w-5 h-5 text-[#e59a67]" />
-                <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#b8612b] rounded-full border-2 border-black" />
+  // Hide footer on login page (matches navbar behavior)
+  if (pathname?.startsWith("/login")) {
+    return null;
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToPopular = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById("popular-properties");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <footer className="w-full bg-[#FDFAF5] border-t border-[#EADCD0] ">
+      {/* ================= EXACT CONTAINER LINE PRESERVED ================= */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 mt-2 sm:mt-10 mb-10 sm:mb-10">
+        
+        {/* ================= 4 BALANCED COLUMNS GRID (HEADINGS ALIGNED IN A LINE) ================= */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-start mb-0">
+          
+          {/* Column 1: Brand Logo, Slogan, Subtext & Skyline touching bottom (5 Cols - More Space) */}
+          <div className="lg:col-span-5 flex flex-col justify-between h-full">
+            <div className="space-y-2 sm:space-y-2.5">
+              {/* Logo - Centered in h-8 sm:h-9 to align with other column headings */}
+              <div className="h-8 sm:h-9 flex items-center">
+                <img
+                  src="/logo.png"
+                  alt="invest2growth"
+                  className="h-8 sm:h-9 w-auto object-contain"
+                />
               </div>
 
-              <div className="flex flex-col">
-                <div className="flex items-baseline text-2xl font-black tracking-tight leading-none text-white">
-                  <span>invest</span>
-                  <span className="text-[#b8612b] font-black mx-0.5">2</span>
-                  <span>growth</span>
-                </div>
-                <span className="text-[9.5px] font-bold tracking-[0.24em] uppercase text-zinc-400 mt-1">
-                  Properties &bull; Lands &bull; Assets
+              {/* Big Heading Slogan (24 to 28px) */}
+              <div className="pt-0.5">
+                <h3 className="font-[family-name:var(--font-poppins)] font-bold text-[#001D4A] text-[20px] sm:text-[23px] md:text-[25px] leading-tight tracking-tight">
+                  Har sapne ke ghar tak, ab aur aasan raasta!
+                </h3>
+                {/* Orange Swoop Underline Curve */}
+                <svg
+                  className="w-28 sm:w-32 h-2 text-[#F15A24] mt-0.5"
+                  viewBox="0 0 120 10"
+                  fill="none"
+                >
+                  <path
+                    d="M2 7C38 1 82 1 118 7"
+                    stroke="#F15A24"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+
+              {/* Normal Body Subtext (14 to 16px) */}
+              <p className="font-[family-name:var(--font-poppins)] font-normal text-[15px] text-gray-700 leading-snug">
+                Buy, Sell and Rent Properties across India with verified trust.
+              </p>
+            </div>
+
+            {/* City Skyline Illustration - Touches Bottom Navy Bar Seamlessly with Smooth Edge */}
+            <div className="w-full max-w-[420px] lg:max-w-[460px] mt-4 sm:mt-6 -mb-[1px] relative z-10 leading-none">
+              <img
+                src="/skyline.png"
+                alt="City Skyline"
+                className="w-full h-auto object-contain object-bottom block"
+              />
+            </div>
+          </div>
+
+          {/* Column 2: Popular Cities (2 Cols) */}
+          <div className="lg:col-span-2 space-y-3 pb-2 sm:pb-3">
+            {/* Heading aligned in a straight line with h-8 sm:h-9 */}
+            <div className="h-8 sm:h-9 flex items-center gap-2.5">
+
+              <h4 className="font-[family-name:var(--font-poppins)] font-semibold text-[#001D4A] text-[18px] sm:text-[20px] tracking-tight">
+                Popular Cities
+              </h4>
+            </div>
+
+            {/* List with Blue Chevrons (14 to 16px) */}
+            <ul className="space-y-1.5 font-[family-name:var(--font-poppins)] text-[15px] text-gray-700">
+              <li>
+                <a
+                  href="#popular-properties"
+                  onClick={scrollToPopular}
+                  className="group inline-flex items-center gap-2 hover:text-[#015BE1] transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Jaipur Properties</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#popular-properties"
+                  onClick={scrollToPopular}
+                  className="group inline-flex items-center gap-2 hover:text-[#015BE1] transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Kolkata Properties</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#popular-properties"
+                  onClick={scrollToPopular}
+                  className="group inline-flex items-center gap-2 hover:text-[#015BE1] transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Pune Properties</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#popular-properties"
+                  onClick={scrollToPopular}
+                  className="group inline-flex items-center gap-2 hover:text-[#015BE1] transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Ahmedabad Properties</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#popular-properties"
+                  onClick={scrollToPopular}
+                  className="group inline-flex items-center gap-2 hover:text-[#015BE1] transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Mumbai Properties</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#popular-properties"
+                  onClick={scrollToPopular}
+                  className="group inline-flex items-center gap-2 hover:text-[#015BE1] transition-colors cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Delhi NCR Properties</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Property Types (2 Cols) */}
+          <div className="lg:col-span-2 space-y-3 pb-2 sm:pb-3">
+            {/* Heading aligned in a straight line with h-8 sm:h-9 */}
+            <div className="h-8 sm:h-9 flex items-center gap-2.5">
+
+              <h4 className="font-[family-name:var(--font-poppins)] font-semibold text-[#001D4A] text-[18px] sm:text-[20px] tracking-tight">
+                Property Types
+              </h4>
+            </div>
+
+            {/* List with Blue Chevrons (14 to 16px) */}
+            <ul className="space-y-1.5 font-[family-name:var(--font-poppins)] text-[15px] text-gray-700">
+              <li className="flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0" />
+                <span>Flats &amp; Apartments</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0" />
+                <span>Independent Houses</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0" />
+                <span>Plots &amp; Land</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0" />
+                <span>Shops &amp; Offices</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0" />
+                <span>PG &amp; Shared</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-[#015BE1] shrink-0" />
+                <span>Agricultural Land</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Contact Us (3 Cols) */}
+          <div className="lg:col-span-3 space-y-3 pb-2 sm:pb-3">
+            {/* Heading aligned in a straight line with h-8 sm:h-9 */}
+            <div className="h-8 sm:h-9 flex items-center gap-2.5">
+              <h4 className="font-[family-name:var(--font-poppins)] font-semibold text-[#001D4A] text-[18px] sm:text-[20px] tracking-tight">
+                Contact Us
+              </h4>
+            </div>
+
+            {/* Contact Items - Clean Monochrome Icons without colored circles */}
+            <div className="space-y-2.5 font-[family-name:var(--font-poppins)] text-[15px] text-gray-700">
+              {/* Email */}
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#002D5E] shrink-0" />
+                <a
+                  href="mailto:info@invest2growth.com"
+                  className="hover:text-[#015BE1] transition-colors truncate"
+                >
+                  info@invest2growth.com
+                </a>
+              </div>
+
+              {/* Phone */}
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#002D5E] shrink-0" />
+                <a
+                  href="tel:+919876543210"
+                  className="hover:text-[#015BE1] transition-colors font-medium text-gray-800"
+                >
+                  +91 98765 43210
+                </a>
+              </div>
+
+              {/* Address */}
+              <div className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-[#002D5E] shrink-0 mt-0.5" />
+                <span className="text-gray-700 leading-snug">
+                  123 Real Estate Park,
+                  <br />
+                  SG Highway, Ahmedabad
                 </span>
               </div>
+            </div>
+
+            {/* Social Media Badges - Unified brand color (no bright multicolored backgrounds) */}
+            <div className="pt-1 flex items-center gap-2.5">
+              {/* Facebook */}
+              <a
+                // href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="w-8 h-8 rounded-full bg-[#002D5E] text-white flex items-center justify-center shadow-xs hover:bg-[#001D4A] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+
+              {/* YouTube */}
+              <a
+                // href="https://youtube.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="YouTube"
+                className="w-8 h-8 rounded-full bg-[#002D5E] text-white flex items-center justify-center shadow-xs hover:bg-[#001D4A] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                // href="https://linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="w-8 h-8 rounded-full bg-[#002D5E] text-white flex items-center justify-center shadow-xs hover:bg-[#001D4A] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+              </a>
+
+              {/* Instagram */}
+              <a
+                // href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="w-8 h-8 rounded-full bg-[#002D5E] text-white flex items-center justify-center shadow-xs hover:bg-[#001D4A] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* ================= BOTTOM DARK NAVY BAR (DIRECTLY TOUCHES SKYLINE) ================= */}
+        <div className="w-full bg-[#002D5E] rounded-2xl px-5 sm:px-8 py-3.5 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-3 text-white shadow-md relative z-0">
+          {/* Copyright (14 to 16px) */}
+          <p className="font-[family-name:var(--font-poppins)] text-[14px] sm:text-[15px] font-normal text-white text-center md:text-left">
+            &copy; 2026 <strong className="font-semibold text-white">Invest2Growth</strong>. All Rights Reserved.
+          </p>
+
+          {/* Links & Back to Top (14 to 16px) */}
+          <div className="flex items-center gap-3 sm:gap-4 font-[family-name:var(--font-poppins)] text-[14px] sm:text-[15px] text-white/90">
+            <Link href="/login" className="hover:text-white transition-colors">
+              Login
             </Link>
-
-            {/* Big Headline from user reference */}
-            <h2 className="text-3xl sm:text-4xl lg:text-3xl font-[family-name:var(--font-jakarta)] font-light text-white tracking-tight leading-tight mb-3">
-              Find Your Perfect Property
-            </h2>
-
-            {/* Sub-description */}
-            <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed pr-10">
-              Take control of your real estate journey with Gujarat&apos;s verified land and investment portal. Discover, buy, sell, and verify with complete legal trust.
-            </p>
-
-          </div>
-
-          {/* Right Columns: Menu, Properties, Services, Social (7 Cols) */}
-          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {/* 1. Menu Column */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                Menu
-              </h3>
-              <ul className="space-y-2.5 text-xs text-zinc-400 font-light">
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors text-sm">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#about" className="hover:text-white transition-colors text-sm">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#featured-projects" className="hover:text-white transition-colors text-sm">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#news" className="hover:text-white transition-colors text-sm">
-                    News
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#service" className="hover:text-white transition-colors text-sm">
-                    Services
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#professional" className="hover:text-white transition-colors text-sm">
-                    Professionals
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#faq" className="hover:text-white transition-colors text-sm">
-                    F&amp;Q
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* 2. Properties Column */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                Properties
-              </h3>
-              <ul className="space-y-2.5 text-xs text-zinc-400 font-light">
-                <li>
-                  <Link href="#residential" className="hover:text-white transition-colors text-sm">
-                    Residential
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#industrial" className="hover:text-white transition-colors text-sm">
-                    Industrial
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#commercial" className="hover:text-white transition-colors text-sm">
-                    Commercial
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#lands" className="hover:text-white transition-colors text-sm">
-                    Land Properties
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#property-categories" className="hover:text-white transition-colors text-sm">
-                    Categories
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* 3. Services Column */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider text-sm">
-                Services
-              </h3>
-              <ul className="space-y-2.5 text-xs text-zinc-400 font-light">
-                <li>
-                  <Link href="#service" className="hover:text-white transition-colors text-sm">
-                    Service Providers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#professional" className="hover:text-white transition-colors text-sm">
-                    Legal Counsel
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#service" className="hover:text-white transition-colors text-sm">
-                    Land Documentation
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#professional" className="hover:text-white transition-colors text-sm">
-                    Valuation Advisory
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#faq" className="hover:text-white transition-colors text-sm">
-                    Support &amp; FAQ
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* 4. Social Column */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                Social
-              </h3>
-              <ul className="space-y-3 text-xs text-zinc-400 font-light ">
-                <li>
-                  <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 hover:text-[#b8612b] transition-colors group"
-                  >
-                    <svg className="w-3.5 h-3.5 fill-current text-zinc-400 group-hover:text-[#b8612b] transition-colors" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                    <span className="text-sm">Facebook</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 hover:text-[#b8612b] transition-colors group"
-                  >
-                    <svg className="w-3.5 h-3.5 fill-none stroke-current text-zinc-400 group-hover:text-[#b8612b] transition-colors stroke-2" viewBox="0 0 24 24">
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                    </svg>
-                    <span className="text-sm">Instagram</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 hover:text-[#b8612b] transition-colors group"
-                  >
-                    <svg className="w-3.5 h-3.5 fill-current text-zinc-400 group-hover:text-[#b8612b] transition-colors" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                    <span className="text-sm">Twitter / X</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://whatsapp.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 hover:text-[#b8612b] transition-colors group"
-                  >
-                    <svg className="w-3.5 h-3.5 fill-current text-zinc-400 group-hover:text-[#b8612b] transition-colors" viewBox="0 0 24 24">
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-                    </svg>
-                    <span className="text-sm">WhatsApp</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://youtube.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 hover:text-[#b8612b] transition-colors group"
-                  >
-                    <svg className="w-3.5 h-3.5 fill-current text-zinc-400 group-hover:text-[#b8612b] transition-colors" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    <span className="text-sm">YouTube</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <span className="text-white/40">|</span>
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="inline-flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+            >
+              <span>Back to Top</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
 
-        {/* ================= BOTTOM WATERMARK & LEGAL SUB-BAR ================= */}
-        <div className="relative pt-8 overflow-hidden">
-          
-
-          {/* Micro Legal Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] text-zinc-500 font-light border-t border-zinc-900">
-
-            {/* Copyright Tagline */}
-            <p className="text-sm text-zinc-400 font-[family-name:var(--font-jakarta)]">
-              2026 &copy; Invest2Growth,  All Rights Reserved.
-            </p>
-
-            <div className="flex items-center gap-4 text-zinc-400">
-              <Link href="#faq" className="hover:text-white transition-colors text-sm">
-                Help &amp; FAQ
-              </Link>
-              <span>&bull;</span>
-              <Link href="#professional" className="hover:text-white transition-colors text-sm">
-                Legal Advisory
-              </Link>
-              <span>&bull;</span>
-              <Link href="#service" className="hover:text-white transition-colors text-sm">
-                Services
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
     </footer>
   );

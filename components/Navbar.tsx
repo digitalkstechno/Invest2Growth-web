@@ -1,159 +1,258 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
+  Home,
+  ChevronDown,
+  Plus,
+  User,
   Menu,
   X,
-  ChevronDown,
-  ChevronRight,
-  ArrowUpRight,
-  Building2,
-  Sparkles,
-  Newspaper,
-  Compass,
-  Phone,
-  Mail,
-  TrendingUp,
-  Home,
-  Factory,
+  ArrowRight,
 } from "lucide-react";
-interface SubPropertyItem {
+
+interface SubMenuItem {
   title: string;
   desc?: string;
   href: string;
-}
-interface PropertyCategory {
-  id: string;
-  name: string;
-  image: string;
-  icon: React.ElementType;
-  subItems: SubPropertyItem[];
+  badge?: string;
 }
 
-const propertyCategories: PropertyCategory[] = [
+interface MenuDropdownItem {
+  id: string;
+  name: string;
+  href: string;
+  items: SubMenuItem[];
+}
+
+const navMenus: MenuDropdownItem[] = [
   {
-    id: "residential",
-    name: "Residential",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=160&q=80",
-    icon: Home,
-    subItems: [
-      { title: "Luxury Villas & Bungalows", desc: "Ultra-luxury independent homes", href: "/#residential" },
-      { title: "Apartments & High-Rise Flats", desc: "2, 3 & 4 BHK premium residences", href: "/#residential" },
-      { title: "Penthouses & Duplexes", desc: "Exclusive skyline living", href: "/#residential" },
-      { title: "Residential Gated Plots", desc: "Ready for residential construction", href: "/#residential" },
+    id: "buy",
+    name: "Buy",
+    href: "/#distinguished-properties",
+    items: [
+      {
+        title: "Residential Apartments",
+        desc: "2, 3 & 4 BHK luxury flats in Gujarat",
+        href: "/#residential",
+      },
+      {
+        title: "Luxury Villas & Bungalows",
+        desc: "Private gated community estates",
+        href: "/#residential",
+      },
+      {
+        title: "Penthouses & Duplexes",
+        desc: "Exclusive skyline residences",
+        href: "/#residential",
+      },
+      {
+        title: "Commercial Offices & Shops",
+        desc: "High footfall retail & corporate hubs",
+        href: "/#commercial",
+      },
+      {
+        title: "Investment Land & NA Plots",
+        desc: "Clear-title strategic corridors",
+        href: "/#land",
+      },
     ],
   },
   {
-    id: "industrial",
-    name: "Industrial",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=160&q=80",
-    icon: Factory,
-    subItems: [
-      { title: "Warehouses & Logistics Parks", desc: "Strategic logistics storage hubs", href: "/#industrial" },
-      { title: "Industrial Sheds & Plots", desc: "GIDC & approved industrial zones", href: "/#industrial" },
-      { title: "Manufacturing Facilities", desc: "Heavy & light manufacturing units", href: "/#industrial" },
-      { title: "Cold Storage & Processing", desc: "Temperature controlled assets", href: "/#industrial" },
+    id: "rent",
+    name: "Rent",
+    href: "/#distinguished-properties",
+    items: [
+      {
+        title: "Residential Flats for Rent",
+        desc: "Furnished & semi-furnished apartments",
+        href: "/#residential",
+      },
+      {
+        title: "Executive Villas for Lease",
+        desc: "Spacious luxury homes with amenities",
+        href: "/#residential",
+      },
+      {
+        title: "Grade-A Corporate Office Space",
+        desc: "Plug-and-play modern business suites",
+        href: "/#commercial",
+      },
+      {
+        title: "Retail Showrooms & Outlets",
+        desc: "Prime high-street commercial locations",
+        href: "/#commercial",
+      },
+      {
+        title: "Warehouses & Logistics Sheds",
+        desc: "Strategic industrial storage spaces",
+        href: "/#industrial",
+      },
+    ],
+  },
+  {
+    id: "sell",
+    name: "Sell",
+    href: "/contactUs",
+    items: [
+      {
+        title: "Post Property for Free",
+        desc: "Direct reach to verified high-net-worth buyers",
+        href: "/contactUs",
+        badge: "Free",
+      },
+      {
+        title: "Property Valuation Advisory",
+        desc: "Accurate fair market value assessment",
+        href: "/contactUs",
+      },
+      {
+        title: "Sell Commercial Real Estate",
+        desc: "Offices, retail complexes & SCO plots",
+        href: "/contactUs",
+      },
+      {
+        title: "Sell Land & Agricultural Parcels",
+        desc: "Highway corridors, TP/DP & NA plots",
+        href: "/contactUs",
+      },
+      {
+        title: "Dedicated Legal Due Diligence",
+        desc: "Fast clearance & transparent title support",
+        href: "/contactUs",
+      },
     ],
   },
   {
     id: "commercial",
     name: "Commercial",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=160&q=80",
-    icon: Building2,
-    subItems: [
-      { title: "Grade-A Corporate Offices", desc: "Modern business towers & suites", href: "/#commercial" },
-      { title: "Retail Showrooms & Shops", desc: "High-footfall prime shopping hubs", href: "/#commercial" },
-      { title: "Commercial SCO Plots", desc: "Shop-cum-office developments", href: "/#commercial" },
-      { title: "Co-working & Business Centers", desc: "Plug-and-play flexible spaces", href: "/#commercial" },
+    href: "/#commercial",
+    items: [
+      {
+        title: "Grade-A Corporate Towers",
+        desc: "Modern office towers in GIFT City & Surat",
+        href: "/#commercial",
+      },
+      {
+        title: "Retail Showrooms & High-Street",
+        desc: "High footfall commercial shopping centers",
+        href: "/#commercial",
+      },
+      {
+        title: "Commercial SCO Plots",
+        desc: "Shop-cum-office masterplanned assets",
+        href: "/#commercial",
+      },
+      {
+        title: "Co-working & Business Centers",
+        desc: "Flexible plug-and-play corporate spaces",
+        href: "/#commercial",
+      },
+      {
+        title: "Logistics Hubs & Warehouses",
+        desc: "Expressway frontage industrial sheds",
+        href: "/#industrial",
+      },
     ],
   },
   {
-    id: "land",
-    name: "Land",
-    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=160&q=80",
-    icon: Compass,
-    subItems: [
-      { title: "Agricultural Lands & Farms", desc: "Fertile land & organic farming", href: "/#land" },
-      { title: "NA / Commercial Plots", desc: "Non-agricultural clear title plots", href: "/#land" },
-      { title: "Farmhouse Land Parcels", desc: "Scenic weekend land developments", href: "/#land" },
-      { title: "Industrial Corridor Lands", desc: "Highway frontage & growth expressways", href: "/#land" },
+    id: "plots",
+    name: "Plots",
+    href: "/#land",
+    items: [
+      {
+        title: "Residential Gated Plots",
+        desc: "Ready for immediate bungalow construction",
+        href: "/#residential",
+      },
+      {
+        title: "NA & Commercial Land Corridors",
+        desc: "Highway-facing clear-title non-agri plots",
+        href: "/#land",
+      },
+      {
+        title: "Heavy GIDC Industrial Land",
+        desc: "Approved zones with power & effluent grids",
+        href: "/#industrial",
+      },
+      {
+        title: "Scenic Farmhouses & Agro Land",
+        desc: "Organic orchards & weekend retreats",
+        href: "/#land",
+      },
+      {
+        title: "Dholera SIR Expressway Corridors",
+        desc: "High-growth special investment region land",
+        href: "/#land",
+      },
     ],
   },
-];
-
-interface NavItem {
-  name: string;
-  href: string;
-  icon?: React.ElementType;
-  badge?: string;
-  isPropertyDropdown?: boolean;
-}
-
-const navItems: NavItem[] = [
   {
-    name: "Property",
-    href: "/#distinguished-properties",
-    icon: Building2,
-    isPropertyDropdown: true,
+    id: "help",
+    name: "Help",
+    href: "/contactUs",
+    items: [
+      {
+        title: "Contact Our Advisory Desk",
+        desc: "Speak with accredited Gujarat real estate consultants",
+        href: "/contactUs",
+      },
+      {
+        title: "Legal & Title Due Diligence",
+        desc: "7/12, NA order, TP/DP scrutiny by advocates",
+        href: "/contactUs",
+      },
+      {
+        title: "NRI Investor Concierge",
+        desc: "Complete remote acquisition & management",
+        href: "/contactUs",
+      },
+      {
+        title: "Frequently Asked Questions",
+        desc: "Answers regarding process, taxes & approvals",
+        href: "/contactUs",
+      },
+      {
+        title: "Direct WhatsApp / Call Support",
+        desc: "+91 98765 43210 (Mon - Sat, 9 AM - 8 PM)",
+        href: "tel:+919876543210",
+      },
+    ],
   },
-  {
-    name: "Features",
-    href: "/#featured-projects",
-    icon: Sparkles,
-  },
-  {
-    name: "News",
-    href: "/#news",
-    icon: Newspaper,
-  },
-  // {
-  //   name: "Service",
-  //   href: "#service",
-  //   icon: Briefcase,
-  // },
-  // {
-  //   name: "Professional",
-  //   href: "#professional",
-  //   icon: UserCheck,
-  // },
-  //  {
-  //   name: "About Us",
-  //   href: "#aboutus",
-  //   icon: User,
-  // },
-  // {
-  //   name: "F&Q",
-  //   href: "#faq",
-  //   icon: HelpCircle,
-  // },
 ];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isPropertyMenuOpen, setIsPropertyMenuOpen] = useState(false);
-  const [hoveredCategory, setHoveredCategory] = useState<string>("Commercial");
-  const [mobilePropertyExpanded, setMobilePropertyExpanded] = useState(false);
-  const [mobileSubExpanded, setMobileSubExpanded] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
-  // Track scroll state for enhanced styling on scroll
+  // Hide Navbar completely on the login page
+  if (pathname?.startsWith("/login")) {
+    return null;
+  }
+
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Scroll detection for sticky shadow/border polish
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 15) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll on mobile drawer open
   useEffect(() => {
-    if (isOpen) {
+    if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -161,429 +260,355 @@ export default function Navbar() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [mobileMenuOpen]);
 
-  const selectedCategory = propertyCategories.find((c) => c.name === hoveredCategory) || propertyCategories[0];
+  const handleMouseEnter = (id: string) => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+    setActiveDropdown(id);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
+  const toggleMobileAccordion = (id: string) => {
+    setMobileAccordion((prev) => (prev === id ? null : id));
+  };
+
+  const handleScrollToSection = (href: string) => {
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+
+    if (href.startsWith("/#")) {
+      const targetId = href.replace("/#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
-    <header className="sticky top-0 z-[100] w-full transition-all duration-300">
-
-      {/* Main Navigation Bar */}
+    <header className="sticky top-0 z-[100] w-full bg-white transition-all duration-200">
+      {/* Top Navbar Container */}
       <nav
-        className={`w-full transition-all duration-300 ${
+        className={`w-full transition-all duration-200 border-b ${
           scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gray-200/80 py-2.5"
-            : "bg-white/98 backdrop-blur-sm border-b border-gray-100 py-3.5"
+            ? "border-gray-200/90 shadow-sm bg-white/98 backdrop-blur-md py-2.5 sm:py-3"
+            : "border-gray-100 bg-white py-3 sm:py-3.5"
         }`}
       >
-        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
-          <div className="flex items-center justify-between gap-4">
-            {/* Left: Brand Logo (invest2growth) */}
-            <Link
-              href="/"
-              className="group flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.01] shrink-0"
-              aria-label="invest2growth homepage"
-            >
-              {/* Modern Real Estate / Growth Geometric Emblem */}
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#002E11] text-white shadow-md shadow-[#002E11]/25 group-hover:bg-[#00230d] transition-all">
-                <TrendingUp className="w-5 h-5 text-[#e59a67] transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#b8612b] rounded-full border-2 border-white" />
-              </div>
-
-              {/* Brand Typography */}
-              <div className="flex flex-col">
-                <div className="flex items-baseline text-2xl font-black tracking-tight leading-none text-[#002E11]">
-                  <span>invest</span>
-                  <span className="text-[#b8612b] font-black mx-0.5">2</span>
-                  <span>growth</span>
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            
+            {/* Left Section: Logo */}
+            <div className="flex items-center shrink-0">
+              {/* invest2growth Brand Logo */}
+              <Link
+                href="/"
+                className="flex items-center group transition-transform duration-150 hover:scale-[1.01]"
+                aria-label="invest2growth Home"
+              >
+                <div className="relative h-8 sm:h-9 md:h-10 w-auto">
+                  <img
+                    src="/logo.png"
+                    alt="invest2growth"
+                    className="h-8 sm:h-9 md:h-10 w-auto object-contain"
+                  />
                 </div>
-                <span className="text-[9.5px] font-bold tracking-[0.22em] uppercase text-gray-500 mt-1">
-                  Properties &bull; Lands &bull; Assets
-                </span>
-              </div>
-            </Link>
+              </Link>
+            </div>
 
-            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 2xl:space-x-3">
-              {navItems.map((item) => {
-                if (item.isPropertyDropdown) {
-                  return (
-                    <div
-                      key={item.name}
-                      className="relative group"
-                      onMouseEnter={() => setIsPropertyMenuOpen(true)}
-                      onMouseLeave={() => setIsPropertyMenuOpen(false)}
+            {/* Middle Section: Home Button + Navigation Links with ChevronDown (Buy, Rent, Sell, Commercial, Plots, Help) */}
+            <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+              {/* Orange tinted Home icon button (Right next to Buy as shown in screenshot) */}
+              <Link
+                href="/"
+                aria-label="Home"
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#FFF2E8] hover:bg-[#ffe3ce] transition-colors shrink-0 shadow-2xs mr-2 xl:mr-3"
+              >
+                <Home className="w-4 h-4 sm:w-5 sm:h-5 text-[#015BE1] fill-[#015BE1]" />
+              </Link>
+
+              {navMenus.map((menu) => {
+                const isOpen = activeDropdown === menu.id;
+                return (
+                  <div
+                    key={menu.id}
+                    className="relative"
+                    onMouseEnter={() => handleMouseEnter(menu.id)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveDropdown((prev) => (prev === menu.id ? null : menu.id));
+                      }}
+                      className={`flex items-center gap-1 px-2.5 xl:px-3 py-1.5 text-[13px] font-medium hover:font-semibold font-[family-name:var(--font-poppins)] rounded-lg transition-colors duration-150 cursor-pointer select-none ${
+                        isOpen
+                          ? "text-[#015BE1] bg-blue-50/70"
+                          : "text-[#0a1a33] hover:text-[#015BE1] hover:bg-gray-50"
+                      }`}
                     >
-                      <Link
-                        href="/#distinguished-properties"
-                        onClick={() => {
-                          setIsPropertyMenuOpen(false);
-                          const target =
-                            document.getElementById("distinguished-properties") ||
-                            document.getElementById("all-properties");
-                          if (target) target.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        className={`flex items-center gap-1.5 px-2.5 xl:px-3 py-2 text-[15px] font-semibold font-[family-name:var(--font-jakarta)] rounded-lg transition-all duration-150 whitespace-nowrap cursor-pointer ${
-                          isPropertyMenuOpen
-                            ? "text-[#002E11] bg-[#002E11]/8"
-                            : "text-gray-700 hover:text-[#002E11] hover:bg-[#002E11]/5"
+                      <span className="font-[family-name:var(--font-poppins)] text-[14.5px]">
+                        {menu.name}
+                      </span>
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-200 ${
+                          isOpen ? "rotate-180 text-[#015BE1]" : ""
                         }`}
-                      >
-                        <span className="font-[family-name:var(--font-jakarta)]">{item.name}</span>
-                        {item.badge && (
-                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#b8612b]/10 text-[#b8612b] border border-[#b8612b]/20 leading-none">
-                            {item.badge}
-                          </span>
-                        )}
-                        <ChevronDown
-                          className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 group-hover:text-[#b8612b] ${
-                            isPropertyMenuOpen ? "rotate-180 text-[#b8612b]" : ""
-                          }`}
-                        />
-                      </Link>
+                      />
+                    </button>
 
-                      {/* Dropdown Menu (Exact design from user screenshot: Residential, Industrial, Commercial, Land, Other) */}
-                      {isPropertyMenuOpen && (
-                        <div className="absolute left-0 top-full pt-2 z-50">
-                          <div className="flex bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden divide-x divide-gray-100 animate-in fade-in-0 zoom-in-95 duration-150">
-                            {/* Left Column: Category selector (No redirect, No URL change, strictly preview switch) */}
-                            <div className="w-64 p-2.5 space-y-1">
-                              {propertyCategories.map((cat) => {
-                                const isHovered = hoveredCategory === cat.name;
-                                return (
-                                  <button
-                                    key={cat.name}
-                                    type="button"
-                                    onClick={() => setHoveredCategory(cat.name)}
-                                    onMouseEnter={() => setHoveredCategory(cat.name)}
-                                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all cursor-pointer group text-left ${
-                                      isHovered
-                                        ? "bg-[#b8612b]/10 text-gray-900 shadow-xs"
-                                        : "text-gray-700 hover:bg-zinc-50"
-                                    }`}
-                                  >
-                                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                                      {/* Thumbnail Image matching screenshot */}
-                                      <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-gray-100 border border-gray-200/60 shrink-0">
-                                        <img
-                                          src={cat.image}
-                                          alt={cat.name}
-                                          className="w-full h-full object-cover"
-                                        />
-                                      </div>
-                                      <span className="text-[15px] font-medium tracking-tight text-gray-800 group-hover:text-[#b8612b] font-[family-name:var(--font-jakarta)]">
-                                        {cat.name}
-                                      </span>
-                                    </div>
+                    {/* Desktop Dropdown Flyout Card */}
+                    {isOpen && (
+                      <div className="absolute left-0 top-full pt-2 z-50 w-72 sm:w-80 animate-in fade-in-0 zoom-in-95 duration-150">
+                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100/90 p-2.5 overflow-hidden">
+                          {/* Dropdown Header */}
+                          <div className="px-3 py-2 border-b border-gray-100 flex items-center justify-between">
+                            <span className="text-xs font-semibold text-[#FC8018] uppercase tracking-wider font-[family-name:var(--font-poppins)]">
+                              {menu.name} Options
+                            </span>
+                            <span className="text-[11px] text-gray-400 font-medium font-[family-name:var(--font-poppins)]">
+                              Gujarat Verified
+                            </span>
+                          </div>
 
-                                    {/* Chevron Right '>' in #b8612b */}
-                                    <ChevronRight
-                                      className={`w-4 h-4 text-[#b8612b] shrink-0 ml-2 transition-transform duration-150 ${
-                                        isHovered ? "translate-x-0.5 opacity-100" : "opacity-75"
-                                      }`}
-                                    />
-                                  </button>
-                                );
-                              })}
-                            </div>
-
-                            {/* Right Column: Flyout Sub-menu preview */}
-                            <div className="w-72 p-4 bg-gray-50/70 flex flex-col justify-between">
-                              <div>
-                                <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-gray-200/70">
-                                  <div>
-                                    <span className="text-xs font-bold uppercase tracking-wider text-[#b8612b] font-[family-name:var(--font-jakarta)]">
-                                      {selectedCategory.name}
-                                    </span>
-                                    <p className="text-[11px] text-gray-500 mt-0.5">
-                                      Verified properties in Gujarat
-                                    </p>
-                                  </div>
-                                </div>
-
-                                <div className="space-y-1">
-                                  {selectedCategory.subItems.map((sub) => (
-                                    <Link
-                                      key={sub.title}
-                                      href={sub.href}
-                                      onClick={() => {
-                                        setIsPropertyMenuOpen(false);
-                                        const target = document.getElementById(selectedCategory.id);
-                                        if (target) target.scrollIntoView({ behavior: "smooth" });
-                                      }}
-                                      className="group/item block p-2 rounded-lg hover:bg-white hover:shadow-xs transition-all"
-                                    >
-                                      <div className="text-xs font-bold text-gray-800 group-hover/item:text-[#b8612b] flex items-center justify-between font-[family-name:var(--font-jakarta)]">
-                                        <span>{sub.title}</span>
-                                        <ArrowUpRight className="w-3 h-3 text-gray-400 group-hover/item:text-[#b8612b] transition-colors" />
-                                      </div>
-                                      {sub.desc && (
-                                        <p className="text-[10.5px] text-gray-500 mt-0.5">
-                                          {sub.desc}
-                                        </p>
-                                      )}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </div>
-
+                          {/* Dropdown Links */}
+                          <div className="mt-1 space-y-0.5">
+                            {menu.items.map((subItem) => (
                               <Link
-                                href="/#distinguished-properties"
-                                onClick={() => {
-                                  setIsPropertyMenuOpen(false);
-                                  const target =
-                                    document.getElementById("distinguished-properties") ||
-                                    document.getElementById("all-properties");
-                                  if (target) target.scrollIntoView({ behavior: "smooth" });
-                                }}
-                                className="mt-3 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#b8612b] text-white text-xs font-bold hover:bg-[#a35322] transition-colors shadow-xs font-[family-name:var(--font-jakarta)]"
+                                key={subItem.title}
+                                href={subItem.href}
+                                onClick={() => handleScrollToSection(subItem.href)}
+                                className="group/item flex items-start justify-between p-2.5 rounded-xl hover:bg-blue-50/60 transition-colors"
                               >
-                                <span>View All Properties</span>
-                                <ArrowUpRight className="w-3.5 h-3.5" />
+                                <div className="pr-2">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="text-[12.5px] font-semibold text-gray-800 group-hover/item:text-[#015BE1] transition-colors font-[family-name:var(--font-poppins)]">
+                                      {subItem.title}
+                                    </span>
+                                    {subItem.badge && (
+                                      <span className="text-[9.5px] font-semibold px-1.5 py-0.5 rounded-full bg-[#FC8018]/10 text-[#FC8018] border border-[#FC8018]/20 font-[family-name:var(--font-poppins)]">
+                                        {subItem.badge}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {subItem.desc && (
+                                    <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1 font-[family-name:var(--font-poppins)]">
+                                      {subItem.desc}
+                                    </p>
+                                  )}
+                                </div>
+                                <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover/item:text-[#015BE1] group-hover/item:translate-x-0.5 transition-all shrink-0 mt-1" />
                               </Link>
-                            </div>
+                            ))}
+                          </div>
+
+                          {/* Dropdown Footer Action */}
+                          <div className="mt-2 pt-2 border-t border-gray-100">
+                            <Link
+                              href={menu.href}
+                              onClick={() => handleScrollToSection(menu.href)}
+                              className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gray-50 hover:bg-[#FC8018] text-gray-700 hover:text-white text-xs font-semibold transition-all font-[family-name:var(--font-poppins)] group/btn"
+                            >
+                              <span>Explore {menu.name}</span>
+                              <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-0.5 transition-transform" />
+                            </Link>
                           </div>
                         </div>
-                      )}
-                    </div>
-                  );
-                }
-
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="px-2.5 xl:px-3 py-2 text-[15px] font-semibold font-[family-name:var(--font-jakarta)] text-gray-700 hover:text-[#b8612b] hover:bg-[#b8612b]/5 rounded-lg transition-all duration-150 whitespace-nowrap"
-                  >
-                    {item.name}
-                  </Link>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
 
-            {/* Right: Get in Touch Button & Actions (in synced #b8612b luxury theme) */}
-            <div className="hidden md:flex items-center gap-3 shrink-0">
+            {/* Right Section: "+ Post Property" (Orange) & "👤 Login" (White Outline) */}
+            <div className="hidden md:flex items-center gap-2.5 sm:gap-3 shrink-0">
+              {/* + Post Property Button (Vibrant Orange #FC8018, Poppins 600, 13px) */}
               <Link
-                href="/contactUs"
-                className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold font-[family-name:var(--font-jakarta)] text-white bg-[#002E11] rounded-full shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 whitespace-nowrap"
+                href="/"
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#FC8018] hover:bg-[#e26e0e] active:scale-95 text-white font-semibold text-[13px] shadow-xs transition-all font-[family-name:var(--font-poppins)] whitespace-nowrap"
               >
-                <span>Get in touch</span>
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/20 group-hover:bg-white/30 text-white transition-all">
-                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-45" />
-                </span>
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>Post Property</span>
+              </Link>
+
+              {/* Login Button (White background with gray border, Poppins 500, 13px) */}
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-white hover:bg-gray-50 active:scale-95 border border-gray-300 hover:border-gray-400 text-gray-800 hover:text-[#015BE1] font-medium text-[13px] shadow-xs transition-all font-[family-name:var(--font-poppins)] whitespace-nowrap"
+              >
+                <User className="w-3.5 h-3.5 text-gray-600" />
+                <span>Login</span>
               </Link>
             </div>
 
-            {/* Mobile / Tablet Menu Button (Hamburger) */}
-            <div className="flex lg:hidden items-center gap-2">
+            {/* Mobile / Small Screen Controls */}
+            <div className="flex md:hidden items-center gap-2 shrink-0">
+              {/* Mobile Post Property Quick Button */}
               <Link
                 href="/contactUs"
-                className="sm:inline-flex md:hidden items-center px-3.5 py-1.5 text-xs font-bold text-white bg-[#b8612b] rounded-full shadow-sm hover:bg-[#a35322] transition-colors whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-[#FC8018] text-white font-semibold text-xs shadow-xs font-[family-name:var(--font-poppins)] whitespace-nowrap"
               >
-                Get in touch
+                <Plus className="w-3 h-3 stroke-[2.5]" />
+                <span>Post</span>
               </Link>
+
+              {/* Hamburger Button */}
               <button
                 type="button"
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2.5 rounded-xl text-gray-700 hover:text-[#002E11] hover:bg-[#002E11]/10 focus:outline-none focus:ring-2 focus:ring-[#002E11]/20 transition-colors"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-xl text-gray-700 hover:text-[#015BE1] hover:bg-blue-50 transition-colors"
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
-                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? (
+                  <X className="w-6 h-6 text-gray-900" />
+                ) : (
+                  <Menu className="w-6 h-6 text-gray-900" />
+                )}
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Drawer Backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 lg:hidden animate-in fade-in duration-200"
-          onClick={() => setIsOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      {/* Mobile Menu Backdrop & Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[120] lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
+            onClick={() => setMobileMenuOpen(false)}
+          />
 
-      {/* Mobile Menu Off-Canvas / Slide-in Drawer */}
-      <div
-        className={`fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-50 shadow-2xl lg:hidden flex flex-col transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        {/* Drawer Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#002E11] text-white">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-300">
-              <TrendingUp className="w-4 h-4" />
-            </div>
-            <div className="flex items-baseline text-xl font-bold tracking-tight text-white">
-              <span>invest</span>
-              <span className="text-emerald-400 font-extrabold mx-0.5">2</span>
-              <span>growth</span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
-            className="p-2 rounded-lg text-emerald-200 hover:text-white hover:bg-white/10 transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Drawer Body - Scrollable Links */}
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-1">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-3 py-1">
-            Navigation Menu
-          </div>
-
-          {navItems.map((item) => {
-            const Icon = item.icon || Building2;
-
-            if (item.isPropertyDropdown) {
-              return (
-                <div key={item.name} className="border-b border-gray-50 pb-1">
-                  <button
-                    type="button"
-                    onClick={() => setMobilePropertyExpanded(!mobilePropertyExpanded)}
-                    className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-gray-800 hover:bg-[#002E11]/5 hover:text-[#002E11] transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 text-[#002E11]">
-                        <Icon className="w-4 h-4" />
-                      </span>
-                      <span className="text-base font-semibold font-[family-name:var(--font-jakarta)]">{item.name}</span>
-                      {item.badge && (
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#002E11]/10 text-[#002E11]">
-                          {item.badge}
-                        </span>
-                      )}
-                    </div>
-                    <ChevronDown
-                      className={`w-4 h-4 text-gray-400 transition-transform ${
-                        mobilePropertyExpanded ? "rotate-180 text-[#002E11]" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {/* Mobile Property Dropdown Accordion */}
-                  {mobilePropertyExpanded && (
-                    <div className="ml-4 pl-3 pr-2 py-1 space-y-1 border-l-2 border-[#002E11]/20">
-                      {propertyCategories.map((cat) => {
-                        const isSubOpen = mobileSubExpanded === cat.name;
-                        return (
-                          <div key={cat.name} className="space-y-1">
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setMobileSubExpanded(isSubOpen ? null : cat.name)
-                              }
-                              className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-zinc-100 transition-colors cursor-pointer text-left"
-                            >
-                              <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                                <img
-                                  src={cat.image}
-                                  alt={cat.name}
-                                  className="w-6 h-6 rounded-md object-cover border border-gray-200"
-                                />
-                                <span className="text-sm font-semibold text-gray-800 font-[family-name:var(--font-jakarta)]">
-                                  {cat.name}
-                                </span>
-                              </div>
-                              <ChevronRight
-                                className={`w-3.5 h-3.5 text-[#002E11] transition-transform ${
-                                  isSubOpen ? "rotate-90" : ""
-                                }`}
-                              />
-                            </button>
-
-                            {isSubOpen && (
-                              <div className="ml-8 pl-2 space-y-1 border-l border-gray-200">
-                                {cat.subItems.map((sub) => (
-                                  <Link
-                                    key={sub.title}
-                                    href={sub.href}
-                                    onClick={() => {
-                                      setIsOpen(false);
-                                      const target = document.getElementById(cat.id);
-                                      if (target) target.scrollIntoView({ behavior: "smooth" });
-                                    }}
-                                    className="block py-1.5 text-xs text-gray-600 hover:text-[#002E11] font-medium font-[family-name:var(--font-jakarta)]"
-                                  >
-                                    {sub.title}
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-
-                      {/* Mobile "View All Properties" button */}
-                      <Link
-                        href="/#distinguished-properties"
-                        onClick={() => {
-                          setIsOpen(false);
-                          const target =
-                            document.getElementById("distinguished-properties") ||
-                            document.getElementById("all-properties");
-                          if (target) target.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 mt-2 rounded-lg bg-[#b8612b] text-white text-xs font-bold hover:bg-[#a35322] transition-colors shadow-xs font-[family-name:var(--font-jakarta)]"
-                      >
-                        <span>View All Properties</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
-            return (
-              <div key={item.name} className="border-b border-gray-50 last:border-b-0">
-                <Link
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between px-3 py-3 rounded-xl text-gray-800 hover:bg-[#002E11]/5 hover:text-[#002E11] transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 text-[#002E11]">
-                      <Icon className="w-4 h-4" />
-                    </span>
-                    <span className="text-base font-semibold font-[family-name:var(--font-jakarta)]">{item.name}</span>
-                  </div>
-                </Link>
+          {/* Drawer Panel */}
+          <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl flex flex-col z-[130] animate-in slide-in-from-right duration-200 font-[family-name:var(--font-poppins)]">
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/logo.png"
+                  alt="invest2growth"
+                  className="h-8 w-auto object-contain"
+                />
               </div>
-            );
-          })}
-        </div>
-
-        {/* Drawer Footer - Contact Action & Details */}
-        <div className="p-6 border-t border-gray-100 bg-gray-50/70 space-y-4">
-          <Link
-            href="/contactUs"
-            onClick={() => setIsOpen(false)}
-            className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#b8612b] text-white rounded-xl font-bold shadow-md shadow-[#b8612b]/25 hover:bg-[#a35322] active:scale-[0.98] transition-all text-sm"
-          >
-            <span>Get in touch</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </Link>
-
-          <div className="pt-2 border-t border-gray-200/60 space-y-2 text-xs text-gray-500">
-            <div className="flex items-center gap-2">
-              <Phone className="w-3.5 h-3.5 text-[#002E11]" />
-              <span className="font-semibold text-gray-700">+91 98765 43210</span>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-3.5 h-3.5 text-[#002E11]" />
-              <span>contact@invest2growth.com</span>
+
+            {/* Drawer Navigation List with Accordions */}
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1.5">
+              {/* Home Quick Link */}
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-[#FFF2E8] text-[#015BE1] font-semibold text-[13.5px] font-[family-name:var(--font-poppins)]"
+              >
+                <Home className="w-4 h-4 text-[#015BE1] fill-[#015BE1]" />
+                <span>Home</span>
+              </Link>
+
+              {/* Nav Menus Accordion */}
+              {navMenus.map((menu) => {
+                const isExpanded = mobileAccordion === menu.id;
+                return (
+                  <div key={menu.id} className="border border-gray-100 rounded-xl overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => toggleMobileAccordion(menu.id)}
+                      className={`w-full flex items-center justify-between px-4 py-2.5 text-left font-medium text-[13px] transition-colors font-[family-name:var(--font-poppins)] ${
+                        isExpanded
+                          ? "bg-blue-50/70 text-[#015BE1] font-semibold"
+                          : "bg-white text-gray-800 hover:bg-gray-50"
+                      }`}
+                    >
+                      <span>{menu.name}</span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                          isExpanded ? "rotate-180 text-[#015BE1]" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {isExpanded && (
+                      <div className="bg-gray-50/80 px-3 py-2 space-y-1 border-t border-gray-100">
+                        {menu.items.map((subItem) => (
+                          <Link
+                            key={subItem.title}
+                            href={subItem.href}
+                            onClick={() => handleScrollToSection(subItem.href)}
+                            className="block p-2 rounded-lg hover:bg-white transition-colors"
+                          >
+                            <div className="text-[12.5px] font-medium text-gray-800 font-[family-name:var(--font-poppins)]">
+                              {subItem.title}
+                            </div>
+                            {subItem.desc && (
+                              <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1 font-[family-name:var(--font-poppins)]">
+                                {subItem.desc}
+                              </p>
+                            )}
+                          </Link>
+                        ))}
+
+                        <Link
+                          href={menu.href}
+                          onClick={() => handleScrollToSection(menu.href)}
+                          className="mt-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#FC8018] text-white text-xs font-semibold font-[family-name:var(--font-poppins)]"
+                        >
+                          <span>Explore All {menu.name}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Drawer Bottom Actions: Post Property + Login */}
+            <div className="p-4 border-t border-gray-100 bg-gray-50/50 space-y-2.5">
+              <Link
+                href="/contactUs"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#FC8018] hover:bg-[#e26e0e] text-white font-semibold text-[13px] shadow-xs font-[family-name:var(--font-poppins)] transition-colors"
+              >
+                <Plus className="w-4 h-4 stroke-[2.5]" />
+                <span>Post Property</span>
+              </Link>
+
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-800 hover:text-[#015BE1] font-medium text-[13px] shadow-xs font-[family-name:var(--font-poppins)] transition-colors"
+              >
+                <User className="w-4 h-4 text-gray-600" />
+                <span>Login</span>
+              </Link>
+
+              {/* Contact info snippet */}
+              <div className="pt-2 text-center text-xs text-gray-500 font-[family-name:var(--font-poppins)]">
+                <span>Inquiries: </span>
+                <a href="tel:+919876543210" className="font-semibold text-gray-700 hover:text-[#015BE1]">
+                  +91 98765 43210
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }
